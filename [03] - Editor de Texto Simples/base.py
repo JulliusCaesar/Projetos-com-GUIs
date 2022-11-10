@@ -9,7 +9,19 @@ def create_main_window():
     # Definindo nosso layout
     layout = [
         [
-            sg.Text("Olá Mundo!")
+            sg.Text("Bem vindo ao nosso editor de texto")
+        ],
+        [
+            sg.Text("Nome do arquivo:"),
+            sg.Input(key="-NAME-"),
+            sg.Radio(".py", group_id="extension", key="-PY-", default=True),
+            sg.Radio(".txt", group_id="extension", key="-TXT-"),
+        ],
+        [
+            sg.Multiline(size=(150,30), key="-CONTENT-"), # Horizontal, vertical
+        ],
+        [
+            sg.Button("Salvar Arquivo", key="-SAVE-", size=(133, None))
         ]
     ]
 
@@ -17,7 +29,7 @@ def create_main_window():
     title = "Meu Ptograma Base"
 
     # Criar a janela
-    window = sg.Window(title, layout)
+    window = sg.Window(title, layout, element_justification="center")
     
     # Retorna a nossa janela
     return window
