@@ -1,12 +1,23 @@
 # Importando o Pacote do PySimpleGUI
 import PySimpleGUI as sg
 
+tasks = ['Limpar a casa', 'Fazer exercícios de Python', 'Formatar o PC']
+
+def refresh_main_window(old_values):
+    window = create_main_window()
+    
+    for key, value in old_values.items():
+        print(key, "==>", value)
+        window[key].update(value)
+    
+    return window
+    
 # Cria a janela principal
 def create_main_window():    
+    global tasks
+    
     # Definindo o nosso tema
     sg.theme("DarkTeal6")
-    
-    tasks = ['Limpar a casa', 'Fazer exercícios de Python', 'Formatar o PC']
     
     task_list = []
     
@@ -33,7 +44,7 @@ def create_main_window():
     title = "Lista de Tarefas"
 
     # Criar a janela
-    window = sg.Window(title, layout)
+    window = sg.Window(title, layout, finalize=True)
     
     # Retorna a nossa janela
     return window
@@ -53,6 +64,10 @@ while True:
     if event == sg.WIN_CLOSED:
         break 
     
+    if event == '-ADD-':
+        window.close()
+        tasks.append(values['-NEWTASK-'])
+        window = refresh_main_window(values)
 
 # Encerrar a janela
 window.close()
