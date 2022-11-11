@@ -1,5 +1,7 @@
 # Importando o Pacote do PySimpleGUI
 import PySimpleGUI as sg
+import os
+import pathlib
 
 # Cria a janela principal
 def create_main_window():    
@@ -14,7 +16,7 @@ def create_main_window():
         [
             sg.Text("Nome do arquivo:"),
             sg.Input(key="-NAME-"),
-            sg.Radio(".py", group_id="extension", key="-PY-", default=True),
+            sg.Radio(".py", group_id="extension", default=True, key="-PY-"),
             sg.Radio(".txt", group_id="extension", key="-TXT-"),
         ],
         [
@@ -26,7 +28,7 @@ def create_main_window():
     ]
 
     # Definindo o Titulo da janela
-    title = "Meu Ptograma Base"
+    title = "Editor de Texto Simples"
 
     # Criar a janela
     window = sg.Window(title, layout, element_justification="center")
@@ -42,13 +44,36 @@ while True:
     # Coletar Eventos e Valores atuais
     event, values = window.read()
     
-    # Mostrar o evento
-    print(event, "==>", values)
+    if event == '-SAVE-':
+        if values['-PY-']:
+            extension = ".py"
+        else:
+            extension = ".txt"
+        
+        filename = values['-NAME-'] + extension
+        content = values["-CONTENT-"]
+        
+        folder = "Arquivos Salvos"
+        
+        parent_path = pathlib.Path(__file__).parent.resolve()
+        path = os.path.join(parent_path, folder)
+        
+        if not os.path.isdir(path):
+            os.makedirs(path)
+        
+        full_path = os.path.join(path, filename)
+        
+        with open(full_path, 'w', encoding='utf-8') as file:
+            file.write(content) 
+    
+    
     
     # Cancelar o loop ao fechar a janela
     if event == sg.WIN_CLOSED:
         break 
     
+    # Mostrar o evento
+    print(event, "==>", values)
 
 # Encerrar a janela
 window.close()
