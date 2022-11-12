@@ -64,6 +64,10 @@ while True:
     # Coletar Eventos e Valores atuais
     event, values = window.read()
     
+    # Cancelar o loop ao fechar a janela
+    if event == sg.WIN_CLOSED:
+        break
+    
     # Mostrar o evento
     print(event, "==>", values)
     
@@ -82,10 +86,7 @@ while True:
         
         tasks[task_index] = new_text
         window[event].update(text=new_text)
-        
-    # Cancelar o loop ao fechar a janela
-    if event == sg.WIN_CLOSED:
-        break 
+         
     
     if event == '-ADD-':
         window.close()
