@@ -3,6 +3,13 @@ import PySimpleGUI as sg
 
 tasks = ['Limpar a casa', 'Fazer exercícios de Python', 'Formatar o PC']
 
+def strike(text):
+    return "\u0336".join(text) + "\u0336"
+
+
+def unstrike(text):
+    return text.replace("\u0336", "")
+
 def refresh_main_window(old_values):
     window = create_main_window()
     
@@ -24,14 +31,14 @@ def create_main_window():
     for index, task in enumerate(tasks):
         task_list.append(
             [
-                sg.Checkbox(task,  key= f'-TASK{index}-', enable_events=True),
+                sg.Checkbox(task,  key= f'-TASK{index}-', enable_events=True, font=("OpenSans", 12)),
             ]
         ) # Adicionar listas dentro de listas
 
     # Definindo nosso layout
     layout = [
         [
-            sg.Text("Minhas Tarefas"),
+            sg.Text("Minhas Tarefas", font=("OpenSans", 15)),
         ],
         *task_list, # Clocar o * na frente da lista é um recurso chamado Unpacking
         [
@@ -60,6 +67,22 @@ while True:
     # Mostrar o evento
     print(event, "==>", values)
     
+    if '-TASK' in event:
+        # -TASK[id]
+        # [id]
+         
+        task_index = event.replace("-TASK", "").replace("-", "") # 'id'
+        task_index = int(task_index) # id (int)
+        task_text = tasks[task_index]
+        
+        if values[event]:
+            new_text = strike(task_text)
+        else:
+            new_text = unstrike(task_text)
+        
+        tasks[task_index] = new_text
+        window[event].update(text=new_text)
+        
     # Cancelar o loop ao fechar a janela
     if event == sg.WIN_CLOSED:
         break 
