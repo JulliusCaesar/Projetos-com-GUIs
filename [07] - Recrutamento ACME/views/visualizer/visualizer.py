@@ -14,8 +14,11 @@ def create_visualizer_window(candidates, title=None, theme="DarkTeal6"):
             sg.Text("Lista de todos os Candidatos:"),
         ],
         [
-            sg.Table(candidates, headings=['Nome Completo', 'Data de Nascimento', "Nível de Python",
-                                           "Ano Inicial de Python", "Salário Desejado"], size=(40,10))
+            sg.Table(candidates, headings=['Nome Completo', 
+                                           'Data de Nascimento', 
+                                           "Nível de Python",
+                                           "Ano Inicial de Python", 
+                                           "Salário Desejado" ], size=(40,10))
         ],
         [
             sg.Button("Voltar", key="-BACK-")
