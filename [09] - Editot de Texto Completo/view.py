@@ -1,6 +1,7 @@
 # Importando o Pacote do PySimpleGUI
 import PySimpleGUI as sg
 
+# Criando o menubar
 def menu_bar():
     menu = [
         [
@@ -19,11 +20,31 @@ def menu_bar():
         [
              "Sobre",
             ["Créditos", "Versão"],
-        ],
-            
+        ],      
     ]
     
     return menu
+
+
+def right_click_menu():
+    menu = [
+        [], # No click do botao do mouse esse primeiro menu não aparece, não importa o que escreva!!
+        [
+            "Editar",
+            [
+                    "Fonte",
+                    [
+                        "Tamanho",
+                        "Família"
+                    ],
+                "Tema",
+            ],
+        ],
+     ]
+    
+    return menu
+
+
 
 # Cria a janela principal
 def create_main_window(title=None, theme="DarkTeal6"):    
@@ -39,19 +60,25 @@ def create_main_window(title=None, theme="DarkTeal6"):
             sg.Multiline(
                 size=(190, 10),
                 enable_events=True,
+                right_click_menu=right_click_menu(),
                 key='-CONTENT-',
             ),
+        ],
+        [
+            sg.StatusBar(f"Arquivo Atual: XXXX | O arquivo tem um total de YYYY caracteres e ZZZZ linhas | Você está usando o ByEditor de Texto 2.0.0",
+                         key="-STATUSBAR-"),
         ],
     ]
     
     # Definindo o titulo da janela
     if title is None:
-        title = "Meu Tiítulo"
+        title = "ByEditor de Texto 2.0.0"
     else:
         title = title
 
     # Criar a janela e deixa ela finalizável
     window = sg.Window(title, layout, finalize=True)
+    
     
     # Retorna a nossa janela
     return window
