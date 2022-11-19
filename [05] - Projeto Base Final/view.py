@@ -4,7 +4,7 @@ import PySimpleGUI as sg
 # Cria a janela principal
 def create_main_window(title=None, theme="DarkTeal6"):    
     # Definindo o nosso tema
-    sg.theme("DarkTeal6")
+    sg.theme(theme)
 
     # Definindo nosso layout
     layout = [
