@@ -17,6 +17,24 @@ if __name__ == "__main__":
         if event == sg.WIN_CLOSED:
             break
         
+        elif "::new" in event:
+            print("Função de criar novo arquivo")
+        
+        # if event.endswith("::open") pode ser usado quando houver palavras parecidas
+        elif "::save" in event:
+            file_path = sg.popup_get_file("Como deseja salvar o arquivo", save_as=True)
+            print("Função de salvar")
+            
+        elif "::open" in event:
+            file_path = sg.popup_get_file("Selecione um arquivo para abrir")
+            print("Função de abrir")
+        
+        elif "::credits" in event:
+            sg.popup_no_buttons("créditos: ByLearn \nAluno: Julio César")
+        
+        elif "::version" in event:
+            sg.popup("Versão: 2.0.0")
+        
         # Mostrar o evento
         print(event, "==>", values) 
         

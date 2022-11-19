@@ -5,21 +5,21 @@ import PySimpleGUI as sg
 def menu_bar():
     menu = [
         [
-            "Arquivo",
-            ["Novo Arquivo", "Abrir Arquivo", "Salvar Arquivo"],
+            "&Arquivo",
+            ["&Novo Arquivo::new", "A&brir Arquivo::open", "&Salvar Arquivo::save"],
         ],
         [
-         "Editar",
-            ["Fonte",
+         "&Editar",
+            ["&Fonte",
              [
-                 "Tamanho",
-                 "Família"
+                 "&Tamanho::size",
+                 "&Família::family"
              ],
-             "Tema"],
+             "&Tema::theme"],
         ],
         [
-             "Sobre",
-            ["Créditos", "Versão"],
+             "&Sobre",
+            ["&Créditos::credits", "&Versão::version"],
         ],      
     ]
     
@@ -34,10 +34,10 @@ def right_click_menu():
             [
                     "Fonte",
                     [
-                        "Tamanho",
-                        "Família"
+                        "Tamanho::size",
+                        "Família::family"
                     ],
-                "Tema",
+                "Tema::theme",
             ],
         ],
      ]
@@ -78,6 +78,14 @@ def create_main_window(title=None, theme="DarkTeal6"):
     # Criar a janela e deixa ela finalizável
     window = sg.Window(title, layout, size=(1100, 500), resizable=True, finalize=True)
     window.find_element("-CONTENT-").expand(True, True, True)
+    
+    # Ctrl + N ==> Cria Novo
+    window.bind("<Control-n>", "::new")
+    # Ctrl + O ==> Abre Existente
+    window.bind('<Control-o>', '::open')
+    # Ctrl + S ==> Salva Atual
+    window.bind('<Control-s>', '::save')
+    
     
     # Retorna a nossa janela
     return window
