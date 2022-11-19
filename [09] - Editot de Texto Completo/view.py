@@ -58,7 +58,6 @@ def create_main_window(title=None, theme="DarkTeal6"):
         ],
         [
             sg.Multiline(
-                size=(190, 10),
                 enable_events=True,
                 right_click_menu=right_click_menu(),
                 key='-CONTENT-',
@@ -77,8 +76,8 @@ def create_main_window(title=None, theme="DarkTeal6"):
         title = title
 
     # Criar a janela e deixa ela finalizável
-    window = sg.Window(title, layout, finalize=True)
-    
+    window = sg.Window(title, layout, size=(1100, 500), resizable=True, finalize=True)
+    window.find_element("-CONTENT-").expand(True, True, True)
     
     # Retorna a nossa janela
     return window
