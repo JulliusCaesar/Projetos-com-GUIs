@@ -2,6 +2,7 @@
 import PySimpleGUI as sg
 
 from view import create_main_window
+from popups import create_font_popup, popup_combo
 
 if __name__ == "__main__":
 
@@ -35,8 +36,19 @@ if __name__ == "__main__":
         elif "::version" in event:
             sg.popup("Versão: 2.0.0")
         
+        elif "::size" in event:
+            tamanho = create_font_popup("Tamanho da Fonte", "Insira o tamanho da fonte")
         # Mostrar o evento
-        print(event, "==>", values) 
+        
+        elif "::family" in event:
+            family = create_font_popup("Familia da Fonte", "Insira a Familia da fonte")
+            # x = sg.popup_get_text() outra forma dr criatr uma popup
+        
+        elif "::theme" in event:
+            theme = popup_combo(sg.theme_list(), "DarkTeal6", "COMBO", "Selecione um Tema")
+            print(theme)
+            
+        print(event, "==>", values)
         
 
     # Encerrar a janela
