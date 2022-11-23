@@ -47,36 +47,36 @@ def right_click_menu():
 
 
 # Cria a janela principal
-def create_main_window(title=None, theme="DarkTeal6"):    
+def create_main_window(title=None, theme="DarkTeal6", size=(1100, 500), font=("Arial", 10), location=(None, None)):    
     # Definindo o nosso tema
     sg.theme(theme)
 
     # Definindo nosso layout
     layout = [
         [
-            sg.MenuBar(menu_bar())
+            sg.MenuBar(menu_bar(), font=("Arial", 10))
         ],
         [
             sg.Multiline(
-                enable_events=True,
                 right_click_menu=right_click_menu(),
+                font=font,
                 key='-CONTENT-',
             ),
         ],
         [
-            sg.StatusBar(f"Arquivo Atual: XXXX | O arquivo tem um total de YYYY caracteres e ZZZZ linhas | Você está usando o ByEditor de Texto 2.0.0",
+            sg.StatusBar(f"Arquivo Atual:  | O arquivo tem um total de YYYY caracteres e ZZZZ linhas | Você está usando o ByEditor de Texto 2.0.0",
                          key="-STATUSBAR-"),
         ],
     ]
     
     # Definindo o titulo da janela
     if title is None:
-        title = "ByEditor de Texto 2.0.0"
+        title = "ByEditor de Texto 2.0.0 - Novo Arquivo"
     else:
         title = title
 
     # Criar a janela e deixa ela finalizável
-    window = sg.Window(title, layout, size=(1100, 500), resizable=True, finalize=True)
+    window = sg.Window(title, layout, size=size, location=location, resizable=True, finalize=True)
     window.find_element("-CONTENT-").expand(True, True, True)
     
     # Ctrl + N ==> Cria Novo

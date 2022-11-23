@@ -4,6 +4,32 @@ import PySimpleGUI as sg
 from view import create_main_window
 from popups import create_font_popup, popup_combo
 
+
+current_theme = "DarkTeal6"
+font_family = "Arial"
+font_size = 10
+file_name = "Novo Arquivo"
+full_file_name = file_name
+chars = 0
+lines = 1
+
+def update_status_bar(content):
+    ...
+
+
+def refresh_window():
+    global window
+    
+    content = values["-CONTENT-"]
+    size = window.size
+    location = window.current_location()
+    window.close()
+    
+    window = create_main_window(title=f"ByEditor de Texto 2.0.0 - {file_name}", theme=current_theme, size=size,
+                                location=location, font=(font_family, font_size))
+    
+    window["-CONTENT-"].update(content)
+
 if __name__ == "__main__":
 
     # Definindo a janela inicial
@@ -37,16 +63,17 @@ if __name__ == "__main__":
             sg.popup("Versão: 2.0.0")
         
         elif "::size" in event:
-            tamanho = create_font_popup("Tamanho da Fonte", "Insira o tamanho da fonte")
-        # Mostrar o evento
+            font_size = create_font_popup("Tamanho da Fonte", "Insira o tamanho da fonte")
+            refresh_window()
         
         elif "::family" in event:
-            family = create_font_popup("Familia da Fonte", "Insira a Familia da fonte")
+            font_family = create_font_popup("Familia da Fonte", "Insira a Familia da fonte")
             # x = sg.popup_get_text() outra forma dr criatr uma popup
+            refresh_window()
         
         elif "::theme" in event:
-            theme = popup_combo(sg.theme_list(), "DarkTeal6", "COMBO", "Selecione um Tema")
-            print(theme)
+            current_theme = popup_combo(sg.theme_list(), current_theme, "Tema Padrão", "Selecione um Tema")
+            refresh_window()
             
         print(event, "==>", values)
         
