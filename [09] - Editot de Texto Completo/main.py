@@ -1,3 +1,4 @@
+import os
 # Importando o Pacote do PySimpleGUI
 import PySimpleGUI as sg
 
@@ -17,7 +18,7 @@ def update_status_bar(content):
     chars = len(content.strip().replace('\n', ''))
     lines = len(content.strip().split('\n'))
     
-    status_bar_text = (f"Arquivo Atual: {file_name} | O arquivo tem um total de {chars} caracteres e {lines} linhas | Você está usando o ByEditor de Texto 2.0.0")
+    status_bar_text = (f"Arquivo Atual: {full_file_name} | O arquivo tem um total de {chars} caracteres e {lines} linhas | Você está usando o ByEditor de Texto 2.0.0")
 
     window['-STATUSBAR-'].update(status_bar_text)
     
@@ -34,7 +35,7 @@ def refresh_window():
     window = create_main_window(title=f"ByEditor de Texto 2.0.0 - {file_name}", theme=current_theme, size=size,
                                 location=location, font=(font_family, font_size))
     
-    content = window["-CONTENT-"].update(content)
+    window["-CONTENT-"].update(content)
     update_status_bar(content)
 
 if __name__ == "__main__":
@@ -52,16 +53,34 @@ if __name__ == "__main__":
             break
         
         elif "::new" in event:
-            print("Função de criar novo arquivo")
+            confirm = sg.popup("Você tem certeza?", custom_text=("Sim", "Não"), title="Atenção!")
+            if confirm == "Sim":
+                window["-CONTENT-"].update("")
+                update_status_bar("")
         
         # if event.endswith("::open") pode ser usado quando houver palavras parecidas
         elif "::save" in event:
             file_path = sg.popup_get_file("Como deseja salvar o arquivo", save_as=True)
-            print("Função de salvar")
+            
+            with open(file_path, 'w', encoding="utf-8") as file:
+                file.write(values["-CONTENT-"])
+            
+            file_name = os.path.basename(file_path)
+            full_file_name = file_path
+            refresh_window()   
             
         elif "::open" in event:
             file_path = sg.popup_get_file("Selecione um arquivo para abrir")
-            print("Função de abrir")
+            
+            with open(file_path, 'r', encoding="utf-8") as file:
+                content = file.read()
+            
+            file_name = os.path.basename(file_path)
+            full_file_name = file_path
+            refresh_window()
+            
+            window['-CONTENT-'].update(content)
+            update_status_bar(content)
         
         elif "::credits" in event:
             sg.popup_no_buttons("créditos: ByLearn \nAluno: Julio César")
