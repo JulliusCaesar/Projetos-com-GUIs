@@ -59,12 +59,13 @@ def create_main_window(title=None, theme="DarkTeal6", size=(1100, 500), font=("A
         [
             sg.Multiline(
                 right_click_menu=right_click_menu(),
+                enable_events=True,
                 font=font,
                 key='-CONTENT-',
             ),
         ],
         [
-            sg.StatusBar(f"Arquivo Atual:  | O arquivo tem um total de YYYY caracteres e ZZZZ linhas | Você está usando o ByEditor de Texto 2.0.0",
+            sg.StatusBar(f"Arquivo Atual:  | O arquivo tem um total de 0 caracteres e 1 linhas | Você está usando o ByEditor de Texto 2.0.0",
                          key="-STATUSBAR-"),
         ],
     ]

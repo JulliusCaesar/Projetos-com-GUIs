@@ -14,9 +14,15 @@ chars = 0
 lines = 1
 
 def update_status_bar(content):
-    ...
+    chars = len(content.strip().replace('\n', ''))
+    lines = len(content.strip().split('\n'))
+    
+    status_bar_text = (f"Arquivo Atual: {file_name} | O arquivo tem um total de {chars} caracteres e {lines} linhas | Você está usando o ByEditor de Texto 2.0.0")
 
-
+    window['-STATUSBAR-'].update(status_bar_text)
+    
+    
+    
 def refresh_window():
     global window
     
@@ -28,7 +34,8 @@ def refresh_window():
     window = create_main_window(title=f"ByEditor de Texto 2.0.0 - {file_name}", theme=current_theme, size=size,
                                 location=location, font=(font_family, font_size))
     
-    window["-CONTENT-"].update(content)
+    content = window["-CONTENT-"].update(content)
+    update_status_bar(content)
 
 if __name__ == "__main__":
 
@@ -74,6 +81,9 @@ if __name__ == "__main__":
         elif "::theme" in event:
             current_theme = popup_combo(sg.theme_list(), current_theme, "Tema Padrão", "Selecione um Tema")
             refresh_window()
+        
+        elif event == '-CONTENT-':
+           update_status_bar(values["-CONTENT-"]) 
             
         print(event, "==>", values)
         
