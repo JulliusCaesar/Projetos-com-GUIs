@@ -1,10 +1,19 @@
 import glob
+import os
+
+from threading import Thread
 
 # Importando o Pacote do PySimpleGUI
 import PySimpleGUI as sg
 
 from view import create_main_window
 
+def run_file(file):
+    os.system(f'python "{file}"')
+
+path = ''
+
+# Verifica se estamos executando esse arquivo como sendo o principal
 if __name__ == "__main__":
 
     # Definindo a janela inicial
@@ -30,7 +39,18 @@ if __name__ == "__main__":
             
             window['-LIST-'].update(values=all_projects) # Recomendado usar values para o listbox
             
-            
+        elif event == "-RUN-":
+               project_name = values['-LIST-'][0]
+               
+               full_path = os.path.join(path, project_name, 'main.py')
+               
+               with open(full_path, 'r', encoding="utf-8") as file:
+                   content = file.read()
+                   window["-CODE-"].update(content)
+                
+                   Thread(target=run_file, args=(full_path,)).start()
+                
+                
         # Mostrar o evento
         print(event, "==>", values) 
         

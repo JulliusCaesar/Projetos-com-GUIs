@@ -1,5 +1,7 @@
 # Importando o Pacote do PySimpleGUI
 import PySimpleGUI as sg
+import os
+import pathlib
 
 def frame_search():
     frame = [
@@ -78,9 +80,12 @@ def create_main_window(title=None, theme="DarkTeal6"):
         title = "Executador de Projetos"
     else:
         title = title
+    
+    parent_path = str(pathlib.Path(__file__).parent.resolve())
+    icon_path = os.path.join(parent_path, "rocket.ico")
 
     # Criar a janela e deixa ela finalizável
-    window = sg.Window(title, layout, finalize=True)
+    window = sg.Window(title, layout, icon=icon_path, finalize=True)
     
     # Retorna a nossa janela
     return window
